@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoogleTest {
 
@@ -34,4 +36,21 @@ public class GoogleTest {
 		//WebElement searchText = driver.findElement(By.id("resultStats"));
 		//assertEquals(searchText.getText(), "Wyników: 10 (0,45 s)");
 	}
+	@Test
+	public void testValidation() throws Exception {
+	WebElement search = driver.findElement(By.className("gsfi"));
+	search.sendKeys("test");
+	WebElement click = driver.findElement(By.className("sbico-c"));
+	click.click();
+	WebDriverWait wait = new WebDriverWait(driver, 10);
+	//wait.until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
+	wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("resultStats")));
+	//Thread.sleep(10000L);
+	WebElement result = driver.findElement(By.id("resultStats"));
+	driver.getTitle();
+	System.out.println(result.getText());
+	assertNotNull(result.getText());
+	}
+	
+	
 }
